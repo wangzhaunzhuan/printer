@@ -20,6 +20,7 @@
     "pdf-to-printer": "^2.0.6",
     "pdfkit": "^0.12.1",
     "printer": "^0.4.0",
+    "silly-datetime": "^0.1.2",
     "svg-to-pdfkit": "^0.1.8",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.5",

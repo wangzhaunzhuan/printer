@@ -5,6 +5,7 @@ const SVGtoPDF = require('svg-to-pdfkit');
 const BaseController = require('../controller/BaseController');
 const config = require('../config');
 const path = require("path");
+const data = require('silly-datetime');
 
 
 class PDF extends BaseController {
@@ -15,17 +16,16 @@ class PDF extends BaseController {
     };
   }
 
-  createBarcode = async (res, printerName, barcodeMessage) => {
-    const doc = new PDFKIT({ margin: 10, size:"A7" });
+  createBarcode = async (barcodeMessage) => {
+    const doc = new PDFKIT({ size:"A9" });
 
 
-    const fileName = `${barcodeMessage}.pdf`;
+    const fileName = `${data.format(new Date(), 'YYYYMMDDHHmmss')}.pdf`;
 
     doc.font('font/weiruanyahei.ttf');
 
     doc.pipe(fs.createWriteStream(path.join(config.LOCATION_OF_THE_FILE, String(fileName))));
 
-    // doc.addPage({ margin: 10, size: [960,540] });
 
 
 // doc.font('font/weiruanyahei.ttf').fontSize(24).text(`条码信息`,100, 80);
@@ -39,7 +39,7 @@ doc.fontSize(12);
 
     // doc.moveDown();
 
-  doc.addSVG(this.bulidBarcode(barcodeMessage), 20, 10);
+  doc.addSVG(this.bulidBarcode(barcodeMessage), 10, 30);
   doc.moveDown();
   doc.moveDown();
 
@@ -60,6 +60,7 @@ doc.fontSize(12);
     JsBarcode(svgNode, text, {
         xmlDocument: document,
         height:50,
+        width:1
     });
 
     const svgText = xmlSerializer.serializeToString(svgNode);

@@ -7,7 +7,7 @@ class BaseController {
         logger.error({success: false, msg:errorCode, data});
     }
 
-    succeseeReturn = (res, msg, data) => {
+    succeseeReturn = (res, msg, data = {}) => {
         res.json({ success: true, msg, data });
         logger.info({ success: true, msg, data });
     }

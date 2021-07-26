@@ -6,9 +6,9 @@ const { logger, loggerConfig } = require('./log');
 
 const app = express();
 
+app.use(loggerConfig);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(loggerConfig);
     
 app.post('/print', barcodecontroller.print);
 app.post('/createBarcodeAndPrint', barcodecontroller.createBarcodeAndPrint);
@@ -18,6 +18,6 @@ app.use((req, res) => {
 
 })
 
-app.listen(config.LISTEN_PORT, config.LISTEN_IP, () => logger.info({ msg:`ip:${config.LISTEN_IP} port:${config.LISTEN_PORT}`, code:'success'}) );
+app.listen(config.LISTEN_PORT, config.LISTEN_IP, () => logger.info({ msg:`ip:${config.LISTEN_IP} port:${config.LISTEN_PORT}`, success: true}) );
 
 
