@@ -1,0 +1,28 @@
+{
+  "name": "zicoxHTD",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluetooth-serial-port": "^2.2.7",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-winston": "^4.1.0",
+    "jsbarcode": "^3.11.4",
+    "nodemon": "^2.0.12",
+    "pdf-to-printer": "^2.0.6",
+    "pdfkit": "^0.12.1",
+    "printer": "^0.4.0",
+    "svg-to-pdfkit": "^0.1.8",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5",
+    "xmldom": "^0.6.0"
+  }
+}
