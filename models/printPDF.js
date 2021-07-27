@@ -16,11 +16,11 @@ class Barcode extends BaseController{
         win32: ['-print-settings "noscale"']
       };
     
-       await ptp.print(filePath, options).then().catch(logger.error({ msg: '打印失败', success: false }));
+       await ptp.print(filePath, options).then().catch();
        var clearFiles = setTimeout(async () => {
         await this.deletePDF(config.LOCATION_OF_THE_FILE, 2);
          
-       }, 60000);
+       }, 600000);
        
     }
 

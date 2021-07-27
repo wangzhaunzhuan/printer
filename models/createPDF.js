@@ -17,7 +17,7 @@ class PDF extends BaseController {
   }
 
   createBarcode = async (barcodeMessage) => {
-    const doc = new PDFKIT({ size:"A9" });
+    const doc = new PDFKIT({ size: "A8" });
 
 
     const fileName = `${data.format(new Date(), 'YYYYMMDDHHmmss')}.pdf`;
@@ -30,7 +30,7 @@ class PDF extends BaseController {
 
 // doc.font('font/weiruanyahei.ttf').fontSize(24).text(`条码信息`,100, 80);
 	
-doc.fontSize(12);
+    doc.fontSize(10);
 // doc.font('font/weiruanyahei.ttf').text(`${barcodeMessage}`, {
 //   width: 410,
 //   margin: 'left',
@@ -39,9 +39,9 @@ doc.fontSize(12);
 
     // doc.moveDown();
 
-  doc.addSVG(this.bulidBarcode(barcodeMessage), 10, 30);
-  doc.moveDown();
-  doc.moveDown();
+    doc.addSVG(this.bulidBarcode(barcodeMessage), 10, 20);
+    doc.moveDown();
+    doc.moveDown();
 
 
     doc.endMarkedContent();
@@ -60,7 +60,8 @@ doc.fontSize(12);
     JsBarcode(svgNode, text, {
         xmlDocument: document,
         height:50,
-        width:1
+        width:1,
+        fontSize:10
     });
 
     const svgText = xmlSerializer.serializeToString(svgNode);

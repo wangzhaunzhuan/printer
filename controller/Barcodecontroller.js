@@ -38,7 +38,7 @@ class BarcodeController extends BaseController {
     
        
         await printPDF.print(res, printerName, barcodeMessage);
-        return this.succeseeReturn(res, '打印成功', {});
+        return this.succeseeReturn(res, `成功发送打印机,型号为：${printerName}`, {});
     }
 
     createBarcodeAndPrint = async (req, res) => {
