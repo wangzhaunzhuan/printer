@@ -42,14 +42,21 @@ class BarcodeController extends BaseController {
     }
 
     createBarcodeAndPrint = async (req, res) => {
-        const { printerName, barcodeMessage } = req.body;
+        const { printerName, barcodeMessage, barcodeSpecifications } = req.body;
 
         if(!printerName || !barcodeMessage){
-            return this.errorReturn(res, 'PARAMS_ERROR');
+            return this.errorReturn(res, 'PARAMS_ERROR', {});
         }
+        if(barcodeSpecifications){
+        const numberValue = await this.isBarcodeSpecifications(barcodeSpecifications)
+        if( numberValue < 0){
+            return this.errorReturn(res, 'BARCODE_IS_NOT_SUPPORT', {});
+        }
+        }
+        
         await this.findFile();
 
-        const result = await createPDF.createBarcode(barcodeMessage);
+        const result = await createPDF.createBarcode(barcodeMessage, barcodeSpecifications);
         req.body.barcodeMessage = result.data;
         await this.print(req, res);
 
@@ -72,6 +79,14 @@ class BarcodeController extends BaseController {
                 fs.mkdirSync(config.LOCATION_OF_THE_FILE, { recursive: true });
             }
     }
+
+    // 判断一维码的格式是否存在
+    isBarcodeSpecifications = async (barcodeSpecifications) => {
+        let arr = ["EAN13", "EAN8", "EAN5", "EAN2", "UPC", "CODE39", "ITF" , "pharmacode", "codabar", "MSI10", "MSI11", "MSI1010" ,"MSI1110"];
+        return arr.indexOf(barcodeSpecifications);
+
+    }
+
 }
 
 const barcodeController = new BarcodeController();
