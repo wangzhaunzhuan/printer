@@ -17,33 +17,26 @@ class PDF extends BaseController {
   }
 
   createBarcode = async (barcodeMessage) => {
-    const doc = new PDFKIT({ size: "A8" });
+    const doc = new PDFKIT({ autoFirstPage: false });
 
-
+    doc.addPage({ margin: 10, size: [141, 85] });
     const fileName = `${data.format(new Date(), 'YYYYMMDDHHmmss')}.pdf`;
 
     doc.font('font/weiruanyahei.ttf');
 
     doc.pipe(fs.createWriteStream(path.join(config.LOCATION_OF_THE_FILE, String(fileName))));
-
-
-
-// doc.font('font/weiruanyahei.ttf').fontSize(24).text(`条码信息`,100, 80);
-	
+    // doc.font('font/weiruanyahei.ttf').fontSize(24).text(`条码信息`,100, 80);
+    if(String(barcodeMessage).trim().length >= 7 && String(barcodeMessage).trim().length <= 10 ){
+      var x = 30;
+    }else if(String(barcodeMessage).trim().length >= 0 && String(barcodeMessage).trim().length < 7){
+      var x = 50;
+    }else if(String(barcodeMessage).trim().length > 10 && String(barcodeMessage).trim().length <= 17){
+      var x = 20
+    }else{
+      var x = 10;
+    }
+    doc.addSVG(this.bulidBarcode(barcodeMessage), x, 25);
     doc.fontSize(10);
-// doc.font('font/weiruanyahei.ttf').text(`${barcodeMessage}`, {
-//   width: 410,
-//   margin: 'left',
-//   align: 'justify'
-// });
-
-    // doc.moveDown();
-
-    doc.addSVG(this.bulidBarcode(barcodeMessage), 10, 20);
-    doc.moveDown();
-    doc.moveDown();
-
-
     doc.endMarkedContent();
 
     doc.end();
@@ -61,7 +54,8 @@ class PDF extends BaseController {
         xmlDocument: document,
         height:50,
         width:1,
-        fontSize:10
+        fontSize:13,
+        background:"#ffffff"
     });
 
     const svgText = xmlSerializer.serializeToString(svgNode);
