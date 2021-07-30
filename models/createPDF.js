@@ -36,7 +36,12 @@ class PDF extends BaseController {
     }else{
       var x = 20;
     }
+    try {
     doc.addSVG(this.bulidBarcode(barcodeMessage, barcodeSpecifications), x, 25);
+      
+    } catch (error) {
+      return { success: false, data: {} };
+    }
     doc.fontSize(10);
     doc.endMarkedContent();
 

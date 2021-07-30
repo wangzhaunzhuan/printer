@@ -57,6 +57,9 @@ class BarcodeController extends BaseController {
         await this.findFile();
 
         const result = await createPDF.createBarcode(barcodeMessage, barcodeSpecifications);
+        if(!result.success){
+            return this.errorReturn(res, 'BARCODE_MESSAGE_ERROR', {});
+        }
         req.body.barcodeMessage = result.data;
         await this.print(req, res);
 
